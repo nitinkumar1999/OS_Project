@@ -1,0 +1,74 @@
+PROBLEM 1.
+#include<stdio.h>
+#include<unistd.h>
+#include<stdlib.h>
+#include<sys/wait.h>
+int main(int x,char **y){
+int n;
+if(x==1){
+exit(0);
+}
+n=atoi(y[1]);
+if(n<=0){
+printf("\n Insert a +ve number\n\n");
+exit(0);
+}
+if(fork()==0){
+while(n>1){
+printf("%d",n);
+if(n%2==0){
+n=n/2;}
+else
+{n=3*n+1;}
+}
+printf("1\n\n");
+}
+else{
+wait(NULL);
+}
+return 0;
+}
+
+
+
+PROBLEM : 26
+#include<stdio.h>
+#include<stdlib.h>
+#include<fcntl.h>
+#include<string.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+int main(int x , char* y[]){
+int z[2];
+pid_t childn;
+
+char readBuff[50];
+char writeBuff[50];
+int readCounter;
+pipe(z);
+if(x<3){
+printf("Atleast we want 2 parameter for working of code");
+exit(1);
+}
+int fileOpen=open(y[1],0);
+int targetFile=open(y[2],0666);
+
+if(fileOpen = = -1 || targetFile== -1){
+printf("Opening file failed");
+exit(1);
+}
+childn=fork();
+if(childn== 0){
+close(z[0]);
+read(z[0],readBuff,sizeof(readBuff));
+printf("The string we will gwt is::%s",readBuff);
+write(targetFile,readBuff,strlen(readBuff)+1);
+}
+else{
+close(z[0]);
+while(readCounter=read(fileOpen,readBuff,sizeof(readBuff)){
+write(z[1],readBuff,sizeof(readBuff));
+}
+close(x[1]);
+}
+}
